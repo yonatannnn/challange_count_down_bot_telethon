@@ -6,10 +6,11 @@ from telethon.sync import TelegramClient
 import os
 from dotenv import load_dotenv
 from collections import defaultdict
+from telethon.sessions import StringSession
 
 load_dotenv()
 
-client = TelegramClient('sessions/scheduler_bot', int(os.getenv("API_ID")), os.getenv("API_HASH")).start(bot_token=os.getenv("BOT_TOKEN"))
+client = TelegramClient(StringSession(), int(os.getenv("API_ID")), os.getenv("API_HASH")).start(bot_token=os.getenv("BOT_TOKEN"))
 
 import asyncio
 
