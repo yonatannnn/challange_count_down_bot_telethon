@@ -6,6 +6,7 @@ from db import add_challenge
 from scheduler import start_scheduler
 from db import get_user_challenges, delete_challenge_by_id
 from telethon import Button
+from telethon.sessions import StringSession
 
 load_dotenv()
 
@@ -17,7 +18,7 @@ api_hash = os.getenv("API_HASH")
 bot_token = os.getenv("BOT_TOKEN")
 
 os.makedirs("sessions", exist_ok=True)
-bot = TelegramClient('sessions/main_bot', api_id, api_hash).start(bot_token=bot_token)
+bot = TelegramClient(StringSession(), api_id, api_hash).start(bot_token=bot_token)
 
 @bot.on(events.NewMessage(pattern='/start'))
 async def start(event):
@@ -32,7 +33,6 @@ async def add_challenge_handler(event):
         await conv.send_message("📝 Please enter the *title* of your challenge:", parse_mode='md')
         title_msg = await conv.get_response()
         title = title_msg.text.strip()
-
         await conv.send_message("📅 Enter the *duration* in days (e.g., 30):", parse_mode='md')
         duration_msg = await conv.get_response()
         try:
