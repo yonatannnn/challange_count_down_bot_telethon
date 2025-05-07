@@ -46,6 +46,6 @@ def start_scheduler(loop):
     def scheduled_wrapper():
         asyncio.run_coroutine_threadsafe(send_daily_updates(), loop)
 
-    scheduler.add_job(scheduled_wrapper, 'cron', hour=12, minute=54)
+    scheduler.add_job(scheduled_wrapper, 'cron', hour=6, minute=0)
     scheduler.start()
 
