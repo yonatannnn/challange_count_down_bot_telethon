@@ -30,10 +30,10 @@ async def add_challenge_handler(event):
     user_id = sender.id
 
     async with bot.conversation(user_id, timeout=120) as conv:
-        await conv.send_message("📝 Please enter the *title* of your challenge:", parse_mode='md')
+        await conv.send_message("📝 Please enter the title of your challenge:", parse_mode='md')
         title_msg = await conv.get_response()
         title = title_msg.text.strip()
-        await conv.send_message("📅 Enter the *duration* in days (e.g., 30):", parse_mode='md')
+        await conv.send_message("📅 Enter the duration in days (e.g., 30):", parse_mode='md')
         duration_msg = await conv.get_response()
         try:
             duration = int(duration_msg.text.strip())
@@ -44,7 +44,7 @@ async def add_challenge_handler(event):
             return
 
         add_challenge(user_id, title, duration)
-        await conv.send_message(f"✅ Challenge *'{title}'* added for {duration} days!", parse_mode='md')
+        await conv.send_message(f"✅ Challenge '{title}' added for {duration} days!", parse_mode='md')
 
 @bot.on(events.NewMessage(pattern='/delete_challenge'))
 async def delete_challenge_handler(event):
@@ -83,7 +83,7 @@ async def handle_delete_click(event):
     title = pending_deletes[user_id].pop(challenge_id)
     delete_challenge_by_id(challenge_id)
     await event.answer()
-    await event.respond(f"✅ Challenge *'{title}'* has been cancelled.", parse_mode='md')
+    await event.respond(f"✅ Challenge '{title}' has been cancelled.", parse_mode='md')
 
     # Clean up if empty
     if not pending_deletes[user_id]:
